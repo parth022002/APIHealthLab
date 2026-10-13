@@ -1,0 +1,87 @@
+import { ProviderManifest } from '@api-healthlab/provider-kit';
+
+export const mistralManifest: ProviderManifest = {
+  id: 'mistral',
+  displayName: 'Mistral AI',
+  lifecycle: 'ACTIVE',
+  docsUrl: 'https://docs.mistral.ai/api/',
+  termsUrl: 'https://mistral.ai/terms/',
+  verifiedOn: '2026-10-13',
+  hosts: ['api.mistral.ai'],
+  auth: {
+    methods: ['API_KEY'],
+    defaultHeader: 'Authorization',
+    headerFormat: 'Bearer {token}',
+  },
+  intents: {
+    LIST_MODELS: {
+      category: 'METADATA',
+      risk: 'R1',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/v1/models',
+      matchers: [
+        {
+          statusCode: 401,
+          messageRegex: 'unauthorized',
+          status: 'INVALID_CREDENTIAL',
+          reasonCode: 'UNAUTHORIZED',
+          description: 'Mistral API key is unauthorized or revoked.',
+        },
+        {
+          statusCode: 429,
+          messageRegex: 'too many requests',
+          status: 'RATE_LIMITED',
+          reasonCode: 'RATE_LIMITED',
+          description: 'Mistral API rate limit exceeded.',
+        },
+      ],
+    },
+    CHAT_MINIMAL: {
+      category: 'CHAT',
+      risk: 'R1',
+      sideEffect: 'READ_ONLY',
+      cost: 'LOW',
+      method: 'POST',
+      path: '/v1/chat/completions',
+      bodyTemplate: JSON.stringify({
+        model: 'mistral-tiny',
+        max_tokens: 1,
+        messages: [{ role: 'user', content: 'health_check' }],
+      }),
+      matchers: [],
+    },
+    EMBED_MINIMAL: {
+      category: 'EMBEDDING',
+      risk: 'R1',
+      sideEffect: 'READ_ONLY',
+      cost: 'LOW',
+      method: 'POST',
+      path: '/v1/embeddings',
+      bodyTemplate: JSON.stringify({
+        model: 'mistral-embed',
+        input: ['health_check'],
+      }),
+      matchers: [],
+    },
+    IDENTITY: {
+      category: 'IDENTITY',
+      risk: 'R1',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/v1/models',
+      matchers: [],
+    },
+    RESOURCE_READ: {
+      category: 'RESOURCE_READ',
+      risk: 'R1',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/v1/models',
+      matchers: [],
+    },
+  },
+};

@@ -1,0 +1,23 @@
+{
+  "name": "@api-healthlab/worker",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "description": "Cloudflare Worker security boundary and streaming API",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@api-healthlab/catalog": "workspace:*",
+    "@api-healthlab/core": "workspace:*",
+    "@api-healthlab/provider-kit": "workspace:*",
+    "@api-healthlab/providers": "workspace:*",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240909.0"
+  }
+}

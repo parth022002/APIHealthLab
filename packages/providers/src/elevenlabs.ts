@@ -1,0 +1,71 @@
+import { ProviderManifest } from '@api-healthlab/provider-kit';
+
+export const elevenlabsManifest: ProviderManifest = {
+  id: 'elevenlabs',
+  displayName: 'ElevenLabs',
+  lifecycle: 'ACTIVE',
+  docsUrl: 'https://elevenlabs.io/docs',
+  termsUrl: 'https://elevenlabs.io/terms',
+  verifiedOn: '2026-10-13',
+  hosts: ['api.elevenlabs.io'],
+  auth: {
+    methods: ['API_KEY'],
+    defaultHeader: 'xi-api-key',
+    headerFormat: '{token}',
+  },
+  intents: {
+    IDENTITY: {
+      category: 'IDENTITY',
+      risk: 'R0',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/v1/user',
+      matchers: [
+        {
+          statusCode: 401,
+          errorCode: 'invalid_api_key',
+          status: 'INVALID_CREDENTIAL',
+          reasonCode: 'INVALID_API_KEY',
+          description: 'ElevenLabs xi-api-key is invalid or revoked.',
+        },
+      ],
+    },
+    LIST_MODELS: {
+      category: 'METADATA',
+      risk: 'R0',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/v1/models',
+      matchers: [],
+    },
+    CHAT_MINIMAL: {
+      category: 'CHAT',
+      risk: 'R0',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/v1/user',
+      matchers: [],
+    },
+    EMBED_MINIMAL: {
+      category: 'EMBEDDING',
+      risk: 'R0',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/v1/user',
+      matchers: [],
+    },
+    RESOURCE_READ: {
+      category: 'RESOURCE_READ',
+      risk: 'R0',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/v1/user',
+      matchers: [],
+    },
+  },
+};

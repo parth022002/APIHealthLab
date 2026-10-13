@@ -1,0 +1,6 @@
+{
+  "name": "@api-healthlab/transport",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Shared NDJSON transport contract placeholder."
+}

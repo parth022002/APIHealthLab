@@ -1,0 +1,71 @@
+import { ProviderManifest } from '@api-healthlab/provider-kit';
+
+export const supabaseManifest: ProviderManifest = {
+  id: 'supabase',
+  displayName: 'Supabase',
+  lifecycle: 'ACTIVE',
+  docsUrl: 'https://supabase.com/docs',
+  termsUrl: 'https://supabase.com/terms',
+  verifiedOn: '2026-10-13',
+  hosts: ['api.supabase.com'],
+  auth: {
+    methods: ['BEARER_TOKEN', 'API_KEY'],
+    defaultHeader: 'Authorization',
+    headerFormat: 'Bearer {token}',
+  },
+  intents: {
+    IDENTITY: {
+      category: 'IDENTITY',
+      risk: 'R0',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/v1/projects',
+      matchers: [
+        {
+          statusCode: 401,
+          errorCode: 'unauthorized',
+          status: 'INVALID_CREDENTIAL',
+          reasonCode: 'INVALID_API_KEY',
+          description: 'Supabase access token is invalid or expired.',
+        },
+      ],
+    },
+    LIST_MODELS: {
+      category: 'METADATA',
+      risk: 'R0',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/v1/projects',
+      matchers: [],
+    },
+    CHAT_MINIMAL: {
+      category: 'CHAT',
+      risk: 'R0',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/v1/projects',
+      matchers: [],
+    },
+    EMBED_MINIMAL: {
+      category: 'EMBEDDING',
+      risk: 'R0',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/v1/projects',
+      matchers: [],
+    },
+    RESOURCE_READ: {
+      category: 'RESOURCE_READ',
+      risk: 'R0',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/v1/projects',
+      matchers: [],
+    },
+  },
+};

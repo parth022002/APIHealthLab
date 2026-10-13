@@ -1,0 +1,71 @@
+import { ProviderManifest } from '@api-healthlab/provider-kit';
+
+export const stabilityManifest: ProviderManifest = {
+  id: 'stability',
+  displayName: 'Stability AI',
+  lifecycle: 'ACTIVE',
+  docsUrl: 'https://platform.stability.ai/docs',
+  termsUrl: 'https://stability.ai/terms-of-use',
+  verifiedOn: '2026-10-13',
+  hosts: ['api.stability.ai'],
+  auth: {
+    methods: ['BEARER_TOKEN', 'API_KEY'],
+    defaultHeader: 'Authorization',
+    headerFormat: 'Bearer {token}',
+  },
+  intents: {
+    IDENTITY: {
+      category: 'IDENTITY',
+      risk: 'R0',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/v1/user/account',
+      matchers: [
+        {
+          statusCode: 401,
+          errorCode: 'unauthorized',
+          status: 'INVALID_CREDENTIAL',
+          reasonCode: 'INVALID_API_KEY',
+          description: 'Stability AI key is invalid or unauthorized.',
+        },
+      ],
+    },
+    LIST_MODELS: {
+      category: 'METADATA',
+      risk: 'R0',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/v1/user/account',
+      matchers: [],
+    },
+    CHAT_MINIMAL: {
+      category: 'CHAT',
+      risk: 'R0',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/v1/user/account',
+      matchers: [],
+    },
+    EMBED_MINIMAL: {
+      category: 'EMBEDDING',
+      risk: 'R0',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/v1/user/account',
+      matchers: [],
+    },
+    RESOURCE_READ: {
+      category: 'RESOURCE_READ',
+      risk: 'R0',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/v1/user/account',
+      matchers: [],
+    },
+  },
+};

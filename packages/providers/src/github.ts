@@ -1,0 +1,78 @@
+import { ProviderManifest } from '@api-healthlab/provider-kit';
+
+export const githubManifest: ProviderManifest = {
+  id: 'github',
+  displayName: 'GitHub',
+  lifecycle: 'ACTIVE',
+  docsUrl: 'https://docs.github.com/en/rest',
+  termsUrl: 'https://docs.github.com/en/site-policy/github-terms/github-terms-of-service',
+  verifiedOn: '2026-10-13',
+  hosts: ['api.github.com'],
+  auth: {
+    methods: ['BEARER_TOKEN'],
+    defaultHeader: 'Authorization',
+    headerFormat: 'Bearer {token}',
+  },
+  intents: {
+    IDENTITY: {
+      category: 'IDENTITY',
+      risk: 'R2',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/user',
+      matchers: [
+        {
+          statusCode: 401,
+          messageRegex: 'Bad credentials',
+          status: 'INVALID_CREDENTIAL',
+          reasonCode: 'BAD_CREDENTIALS',
+          description: 'GitHub rejected the token as bad or revoked credentials.',
+        },
+        {
+          statusCode: 403,
+          messageRegex: 'rate limit exceeded',
+          status: 'RATE_LIMITED',
+          reasonCode: 'RATE_LIMIT_EXCEEDED',
+          description: 'GitHub API rate limit exceeded.',
+        },
+      ],
+    },
+    RESOURCE_READ: {
+      category: 'RESOURCE_READ',
+      risk: 'R2',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/user/repos?per_page=1',
+      matchers: [],
+    },
+    LIST_MODELS: {
+      category: 'METADATA',
+      risk: 'R1',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/user',
+      matchers: [],
+    },
+    CHAT_MINIMAL: {
+      category: 'CHAT',
+      risk: 'R1',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/user',
+      matchers: [],
+    },
+    EMBED_MINIMAL: {
+      category: 'EMBEDDING',
+      risk: 'R1',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/user',
+      matchers: [],
+    },
+  },
+};

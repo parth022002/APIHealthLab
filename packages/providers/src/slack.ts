@@ -1,0 +1,71 @@
+import { ProviderManifest } from '@api-healthlab/provider-kit';
+
+export const slackManifest: ProviderManifest = {
+  id: 'slack',
+  displayName: 'Slack API',
+  lifecycle: 'ACTIVE',
+  docsUrl: 'https://api.slack.com',
+  termsUrl: 'https://slack.com/terms-of-service',
+  verifiedOn: '2026-10-13',
+  hosts: ['slack.com'],
+  auth: {
+    methods: ['BEARER_TOKEN'],
+    defaultHeader: 'Authorization',
+    headerFormat: 'Bearer {token}',
+  },
+  intents: {
+    IDENTITY: {
+      category: 'IDENTITY',
+      risk: 'R0',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'POST',
+      path: '/api/auth.test',
+      matchers: [
+        {
+          statusCode: 200,
+          errorCode: 'invalid_auth',
+          status: 'INVALID_CREDENTIAL',
+          reasonCode: 'INVALID_API_KEY',
+          description: 'Slack token is invalid, deleted, or revoked.',
+        },
+      ],
+    },
+    LIST_MODELS: {
+      category: 'METADATA',
+      risk: 'R0',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'POST',
+      path: '/api/auth.test',
+      matchers: [],
+    },
+    CHAT_MINIMAL: {
+      category: 'CHAT',
+      risk: 'R0',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'POST',
+      path: '/api/auth.test',
+      matchers: [],
+    },
+    EMBED_MINIMAL: {
+      category: 'EMBEDDING',
+      risk: 'R0',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'POST',
+      path: '/api/auth.test',
+      matchers: [],
+    },
+    RESOURCE_READ: {
+      category: 'RESOURCE_READ',
+      risk: 'R0',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'POST',
+      path: '/api/auth.test',
+      matchers: [],
+    },
+  },
+};

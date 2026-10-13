@@ -1,0 +1,83 @@
+import { ProviderManifest } from '@api-healthlab/provider-kit';
+
+export const openrouterManifest: ProviderManifest = {
+  id: 'openrouter',
+  displayName: 'OpenRouter',
+  lifecycle: 'ACTIVE',
+  docsUrl: 'https://openrouter.ai/docs',
+  termsUrl: 'https://openrouter.ai/terms',
+  verifiedOn: '2026-10-13',
+  hosts: ['openrouter.ai'],
+  auth: {
+    methods: ['API_KEY'],
+    defaultHeader: 'Authorization',
+    headerFormat: 'Bearer {token}',
+  },
+  intents: {
+    LIST_MODELS: {
+      category: 'METADATA',
+      risk: 'R1',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/api/v1/models',
+      matchers: [
+        {
+          statusCode: 401,
+          messageRegex: 'unauthorized',
+          status: 'INVALID_CREDENTIAL',
+          reasonCode: 'UNAUTHORIZED',
+          description: 'OpenRouter API key is invalid or unrecognized.',
+        },
+        {
+          statusCode: 402,
+          messageRegex: 'payment required',
+          status: 'BILLING_REQUIRED',
+          reasonCode: 'PAYMENT_REQUIRED',
+          description: 'OpenRouter credit balance exhausted or payment required.',
+        },
+      ],
+    },
+    CHAT_MINIMAL: {
+      category: 'CHAT',
+      risk: 'R1',
+      sideEffect: 'READ_ONLY',
+      cost: 'LOW',
+      method: 'POST',
+      path: '/api/v1/chat/completions',
+      bodyTemplate: JSON.stringify({
+        model: 'meta-llama/llama-3.2-1b-instruct:free',
+        max_tokens: 1,
+        messages: [{ role: 'user', content: 'health_check' }],
+      }),
+      matchers: [],
+    },
+    IDENTITY: {
+      category: 'IDENTITY',
+      risk: 'R1',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/api/v1/models',
+      matchers: [],
+    },
+    EMBED_MINIMAL: {
+      category: 'EMBEDDING',
+      risk: 'R1',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/api/v1/models',
+      matchers: [],
+    },
+    RESOURCE_READ: {
+      category: 'RESOURCE_READ',
+      risk: 'R1',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/api/v1/models',
+      matchers: [],
+    },
+  },
+};

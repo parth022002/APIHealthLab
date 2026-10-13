@@ -1,0 +1,25 @@
+{
+  "name": "@api-healthlab/catalog",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "description": "Provider capability matrix and catalog generated from validated manifests.",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@api-healthlab/core": "workspace:*",
+    "@api-healthlab/provider-kit": "workspace:*",
+    "@api-healthlab/providers": "workspace:*"
+  }
+}

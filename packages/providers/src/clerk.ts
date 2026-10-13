@@ -1,0 +1,71 @@
+import { ProviderManifest } from '@api-healthlab/provider-kit';
+
+export const clerkManifest: ProviderManifest = {
+  id: 'clerk',
+  displayName: 'Clerk',
+  lifecycle: 'ACTIVE',
+  docsUrl: 'https://clerk.com/docs',
+  termsUrl: 'https://clerk.com/terms',
+  verifiedOn: '2026-10-13',
+  hosts: ['api.clerk.com'],
+  auth: {
+    methods: ['BEARER_TOKEN', 'API_KEY'],
+    defaultHeader: 'Authorization',
+    headerFormat: 'Bearer {token}',
+  },
+  intents: {
+    IDENTITY: {
+      category: 'IDENTITY',
+      risk: 'R0',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/v1/users?limit=1',
+      matchers: [
+        {
+          statusCode: 401,
+          errorCode: 'invalid_secret_key',
+          status: 'INVALID_CREDENTIAL',
+          reasonCode: 'INVALID_API_KEY',
+          description: 'Clerk Secret Key (sk_test_...) is invalid or revoked.',
+        },
+      ],
+    },
+    LIST_MODELS: {
+      category: 'METADATA',
+      risk: 'R0',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/v1/users?limit=1',
+      matchers: [],
+    },
+    CHAT_MINIMAL: {
+      category: 'CHAT',
+      risk: 'R0',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/v1/users?limit=1',
+      matchers: [],
+    },
+    EMBED_MINIMAL: {
+      category: 'EMBEDDING',
+      risk: 'R0',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/v1/users?limit=1',
+      matchers: [],
+    },
+    RESOURCE_READ: {
+      category: 'RESOURCE_READ',
+      risk: 'R0',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/v1/users?limit=1',
+      matchers: [],
+    },
+  },
+};

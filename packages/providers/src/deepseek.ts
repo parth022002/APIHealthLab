@@ -1,0 +1,76 @@
+import { ProviderManifest } from '@api-healthlab/provider-kit';
+
+export const deepseekManifest: ProviderManifest = {
+  id: 'deepseek',
+  displayName: 'DeepSeek',
+  lifecycle: 'ACTIVE',
+  docsUrl: 'https://platform.deepseek.com/docs',
+  termsUrl: 'https://www.deepseek.com/terms',
+  verifiedOn: '2026-10-13',
+  hosts: ['api.deepseek.com'],
+  auth: {
+    methods: ['BEARER_TOKEN', 'API_KEY'],
+    defaultHeader: 'Authorization',
+    headerFormat: 'Bearer {token}',
+  },
+  intents: {
+    LIST_MODELS: {
+      category: 'METADATA',
+      risk: 'R1',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/v1/models',
+      matchers: [
+        {
+          statusCode: 401,
+          errorCode: 'invalid_api_key',
+          status: 'INVALID_CREDENTIAL',
+          reasonCode: 'INVALID_API_KEY',
+          description: 'DeepSeek API key is invalid or deleted.',
+        },
+      ],
+    },
+    CHAT_MINIMAL: {
+      category: 'CHAT',
+      risk: 'R1',
+      sideEffect: 'READ_ONLY',
+      cost: 'LOW',
+      method: 'POST',
+      path: '/v1/chat/completions',
+      bodyTemplate: JSON.stringify({
+        model: 'deepseek-chat',
+        max_tokens: 1,
+        messages: [{ role: 'user', content: 'health_check' }],
+      }),
+      matchers: [],
+    },
+    IDENTITY: {
+      category: 'IDENTITY',
+      risk: 'R1',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/v1/models',
+      matchers: [],
+    },
+    EMBED_MINIMAL: {
+      category: 'EMBEDDING',
+      risk: 'R1',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/v1/models',
+      matchers: [],
+    },
+    RESOURCE_READ: {
+      category: 'RESOURCE_READ',
+      risk: 'R1',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/v1/models',
+      matchers: [],
+    },
+  },
+};

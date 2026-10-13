@@ -1,0 +1,27 @@
+{
+  "name": "api-healthlab-workspace",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Local-first, intent-aware API credential diagnostics platform",
+  "license": "MIT",
+  "packageManager": "pnpm@12.11.2",
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "scripts": {
+    "format": "pnpm -r --if-present format",
+    "format:check": "pnpm -r --if-present format:check",
+    "lint": "pnpm -r --if-present lint",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "test": "vitest run --pool=forks",
+    "test:unit": "vitest run --pool=forks",
+    "test:contract": "vitest run --dir tests/contract --pool=forks",
+    "build": "pnpm -r --if-present build"
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.5",
+    "typescript": "^5.5.4",
+    "vitest": "^2.0.5"
+  }
+}

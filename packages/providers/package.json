@@ -1,0 +1,24 @@
+{
+  "name": "@api-healthlab/providers",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "description": "Reviewed provider manifests and definitions.",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@api-healthlab/core": "workspace:*",
+    "@api-healthlab/provider-kit": "workspace:*"
+  }
+}

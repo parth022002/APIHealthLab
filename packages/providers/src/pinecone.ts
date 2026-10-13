@@ -1,0 +1,71 @@
+import { ProviderManifest } from '@api-healthlab/provider-kit';
+
+export const pineconeManifest: ProviderManifest = {
+  id: 'pinecone',
+  displayName: 'Pinecone Vector DB',
+  lifecycle: 'ACTIVE',
+  docsUrl: 'https://docs.pinecone.io',
+  termsUrl: 'https://www.pinecone.io/terms',
+  verifiedOn: '2026-10-13',
+  hosts: ['api.pinecone.io'],
+  auth: {
+    methods: ['API_KEY'],
+    defaultHeader: 'Api-Key',
+    headerFormat: '{token}',
+  },
+  intents: {
+    IDENTITY: {
+      category: 'IDENTITY',
+      risk: 'R0',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/indexes',
+      matchers: [
+        {
+          statusCode: 401,
+          errorCode: 'unauthorized',
+          status: 'INVALID_CREDENTIAL',
+          reasonCode: 'INVALID_API_KEY',
+          description: 'Pinecone Api-Key is invalid or revoked.',
+        },
+      ],
+    },
+    LIST_MODELS: {
+      category: 'METADATA',
+      risk: 'R0',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/indexes',
+      matchers: [],
+    },
+    CHAT_MINIMAL: {
+      category: 'CHAT',
+      risk: 'R0',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/indexes',
+      matchers: [],
+    },
+    EMBED_MINIMAL: {
+      category: 'EMBEDDING',
+      risk: 'R0',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/indexes',
+      matchers: [],
+    },
+    RESOURCE_READ: {
+      category: 'RESOURCE_READ',
+      risk: 'R0',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/indexes',
+      matchers: [],
+    },
+  },
+};

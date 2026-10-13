@@ -1,0 +1,83 @@
+import { ProviderManifest } from '@api-healthlab/provider-kit';
+
+export const groqManifest: ProviderManifest = {
+  id: 'groq',
+  displayName: 'Groq',
+  lifecycle: 'ACTIVE',
+  docsUrl: 'https://console.groq.com/docs/quickstart',
+  termsUrl: 'https://groq.com/terms-of-use/',
+  verifiedOn: '2026-10-13',
+  hosts: ['api.groq.com'],
+  auth: {
+    methods: ['BEARER_TOKEN'],
+    defaultHeader: 'Authorization',
+    headerFormat: 'Bearer {token}',
+  },
+  intents: {
+    LIST_MODELS: {
+      category: 'METADATA',
+      risk: 'R1',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/openai/v1/models',
+      matchers: [
+        {
+          statusCode: 401,
+          errorCode: 'invalid_api_key',
+          status: 'INVALID_CREDENTIAL',
+          reasonCode: 'INVALID_API_KEY',
+          description: 'Groq API key is invalid or revoked.',
+        },
+        {
+          statusCode: 429,
+          errorCode: 'rate_limit_exceeded',
+          status: 'RATE_LIMITED',
+          reasonCode: 'RATE_LIMIT_EXCEEDED',
+          description: 'Groq API rate limit or TPM/RPM quota reached.',
+        },
+      ],
+    },
+    CHAT_MINIMAL: {
+      category: 'CHAT',
+      risk: 'R1',
+      sideEffect: 'READ_ONLY',
+      cost: 'LOW',
+      method: 'POST',
+      path: '/openai/v1/chat/completions',
+      bodyTemplate: JSON.stringify({
+        model: 'llama-3.1-8b-instant',
+        max_tokens: 1,
+        messages: [{ role: 'user', content: 'health_check' }],
+      }),
+      matchers: [],
+    },
+    IDENTITY: {
+      category: 'IDENTITY',
+      risk: 'R1',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/openai/v1/models',
+      matchers: [],
+    },
+    EMBED_MINIMAL: {
+      category: 'EMBEDDING',
+      risk: 'R1',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/openai/v1/models',
+      matchers: [],
+    },
+    RESOURCE_READ: {
+      category: 'RESOURCE_READ',
+      risk: 'R1',
+      sideEffect: 'READ_ONLY',
+      cost: 'FREE',
+      method: 'GET',
+      path: '/openai/v1/models',
+      matchers: [],
+    },
+  },
+};

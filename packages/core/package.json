@@ -1,0 +1,23 @@
+{
+  "name": "@api-healthlab/core",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "description": "Shared domain, policy, contracts, canonical schemas and diagnostics core.",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "zod": "^3.23.8"
+  }
+}

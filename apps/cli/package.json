@@ -1,0 +1,25 @@
+{
+  "name": "@api-healthlab/cli",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "description": "Local-first Commander CLI for intent-aware API credential diagnostics.",
+  "bin": {
+    "api-healthlab": "./dist/bin.js"
+  },
+  "main": "./dist/index.js",
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@api-healthlab/core": "workspace:*",
+    "@api-healthlab/provider-kit": "workspace:*",
+    "@api-healthlab/providers": "workspace:*",
+    "commander": "^12.1.0"
+  }
+}
